@@ -1,1 +1,17 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
+
+body {
+  background-color: bisque;
+};
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+};
+
+button {
+  padding: 12px;
+  
+  cursor: pointer;
+}
