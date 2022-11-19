@@ -11,7 +11,6 @@ const refs = {
 
 let page = 1;
 let searchQuery = null;
-let hits = null;
 
 refs.form.addEventListener("submit", onSubmit);
 refs.loadMoreBtn.addEventListener("click", onClickloadMoreBtn);
@@ -28,10 +27,12 @@ function onSubmit(e) {
       if (res.totalHits) {
         renderPhotoCardMarkup(createPhotoCardMarkup(res.hits));
         showloadMoreBtn();
-        if (res.totalHits < 40) {
+
+        if (res.hits.length < 40) {
           whenGalleryEnd();
         }
-      } else {
+      }
+      else {
         onFetchError();
         clearGallery();
         hideloadMoreBtn();
@@ -98,14 +99,12 @@ function hideloadMoreBtn() {
 function onClickloadMoreBtn(e) {
    API.fetchImg(searchQuery, page)
     .then(res => {
-      console.log(res.hits.length);
-      console.log(res.totalHits);
 
       if (res.totalHits) {
         renderPhotoCardMarkup(createPhotoCardMarkup(res.hits));
-      }
-      else {
-        whenGalleryEnd();
+        if (res.hits.length < 40) {
+          whenGalleryEnd();
+        }
       }
     })
      .catch(onFetchError)
@@ -115,8 +114,6 @@ function onClickloadMoreBtn(e) {
 
 function whenGalleryEnd() {
   Notify.failure("We're sorry, but you've reached the end of search results.");
-  console.error("We're sorry, but you've reached the end of search results.");
-  // refs.loadMoreBtn.disabled = true;
   hideloadMoreBtn();
 }
 
@@ -126,15 +123,3 @@ function whenGalleryEnd() {
 //   Notify.Notify(`Hooray! We found ${totalHits} images.`);
 //   console.log(`Hooray! We found ${totalHits} images.`)
 // }
-
-// ====== альтернатива отримання searchQuery ======
-// let searchQuery = null;
-
-// refs.input.addEventListener("input", getInputValue);
-
-// function getInputValue(e) {
-//   searchQuery = e.target.value.trim();
-
-//   console.log('in getInputValue:', searchQuery);
-// }
-// ====== альтернатива ======
