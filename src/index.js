@@ -1,4 +1,5 @@
 // import photoCard from './templates/img.hbs';
+
 import API from './js/API';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
